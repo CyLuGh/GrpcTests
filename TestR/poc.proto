@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcShared";
+
+package poc;
+
+service MicroPoc {
+	// Sum two items!
+	rpc Sum (SumRequest) returns (SumReply);
+}
+
+// Parameters to be summed
+message SumRequest {
+	int32 first = 1;
+	int32 second = 2;
+}
+
+// Summ result
+message SumReply {
+	int32 result = 1;
+}
