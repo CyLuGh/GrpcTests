@@ -3,7 +3,23 @@
 ## R Resources
 
 https://github.com/eddelbuettel/rprotobuf
+
 https://github.com/nfultz/grpc
+
+## Python
+
+Install GRPC 
+
+`python -m pip install grpcio`
+
+Install GRPC tools
+
+`python -m pip install grpcio-tools`
+
+Generate python code from proto file
+
+`python -m grpc_tools.protoc -I../GrpcShared --python_out=. --grpc_python_out=. ../GrpcShared/poc.proto`
+
 
 ## Troubleshoot
 
