@@ -6,7 +6,8 @@ import poc_pb2 as poc__pb2
 
 
 class MicroPocStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Microservice doing some sums
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -19,13 +20,26 @@ class MicroPocStub(object):
                 request_serializer=poc__pb2.SumRequest.SerializeToString,
                 response_deserializer=poc__pb2.SumReply.FromString,
                 )
+        self.Accumulate = channel.stream_stream(
+                '/poc.MicroPoc/Accumulate',
+                request_serializer=poc__pb2.AccumulatedElement.SerializeToString,
+                response_deserializer=poc__pb2.SumReply.FromString,
+                )
 
 
 class MicroPocServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Microservice doing some sums
+    """
 
     def Sum(self, request, context):
         """Sum two items!
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Accumulate(self, request_iterator, context):
+        """Accumulate results
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -39,6 +53,11 @@ def add_MicroPocServicer_to_server(servicer, server):
                     request_deserializer=poc__pb2.SumRequest.FromString,
                     response_serializer=poc__pb2.SumReply.SerializeToString,
             ),
+            'Accumulate': grpc.stream_stream_rpc_method_handler(
+                    servicer.Accumulate,
+                    request_deserializer=poc__pb2.AccumulatedElement.FromString,
+                    response_serializer=poc__pb2.SumReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'poc.MicroPoc', rpc_method_handlers)
@@ -47,7 +66,8 @@ def add_MicroPocServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class MicroPoc(object):
-    """Missing associated documentation comment in .proto file."""
+    """Microservice doing some sums
+    """
 
     @staticmethod
     def Sum(request,
@@ -62,6 +82,23 @@ class MicroPoc(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/poc.MicroPoc/Sum',
             poc__pb2.SumRequest.SerializeToString,
+            poc__pb2.SumReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Accumulate(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(request_iterator, target, '/poc.MicroPoc/Accumulate',
+            poc__pb2.AccumulatedElement.SerializeToString,
             poc__pb2.SumReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

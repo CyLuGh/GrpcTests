@@ -8,6 +8,9 @@
 using grpc = global::Grpc.Core;
 
 namespace GrpcShared {
+  /// <summary>
+  /// Microservice doing some sums
+  /// </summary>
   public static partial class MicroPoc
   {
     static readonly string __ServiceName = "poc.MicroPoc";
@@ -44,12 +47,20 @@ namespace GrpcShared {
 
     static readonly grpc::Marshaller<global::GrpcShared.SumRequest> __Marshaller_poc_SumRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumRequest.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.SumReply> __Marshaller_poc_SumReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumReply.Parser));
+    static readonly grpc::Marshaller<global::GrpcShared.AccumulatedElement> __Marshaller_poc_AccumulatedElement = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.AccumulatedElement.Parser));
 
     static readonly grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply> __Method_Sum = new grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Sum",
         __Marshaller_poc_SumRequest,
+        __Marshaller_poc_SumReply);
+
+    static readonly grpc::Method<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply> __Method_Accumulate = new grpc::Method<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply>(
+        grpc::MethodType.DuplexStreaming,
+        __ServiceName,
+        "Accumulate",
+        __Marshaller_poc_AccumulatedElement,
         __Marshaller_poc_SumReply);
 
     /// <summary>Service descriptor</summary>
@@ -69,6 +80,18 @@ namespace GrpcShared {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::GrpcShared.SumReply> Sum(global::GrpcShared.SumRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Accumulate results
+      /// </summary>
+      /// <param name="requestStream">Used for reading requests from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      public virtual global::System.Threading.Tasks.Task Accumulate(grpc::IAsyncStreamReader<global::GrpcShared.AccumulatedElement> requestStream, grpc::IServerStreamWriter<global::GrpcShared.SumReply> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -142,6 +165,26 @@ namespace GrpcShared {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Sum, null, options, request);
       }
+      /// <summary>
+      /// Accumulate results
+      /// </summary>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncDuplexStreamingCall<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply> Accumulate(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return Accumulate(new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Accumulate results
+      /// </summary>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncDuplexStreamingCall<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply> Accumulate(grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_Accumulate, null, options);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override MicroPocClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -154,7 +197,8 @@ namespace GrpcShared {
     public static grpc::ServerServiceDefinition BindService(MicroPocBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Sum, serviceImpl.Sum).Build();
+          .AddMethod(__Method_Sum, serviceImpl.Sum)
+          .AddMethod(__Method_Accumulate, serviceImpl.Accumulate).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -164,6 +208,7 @@ namespace GrpcShared {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, MicroPocBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_Sum, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(serviceImpl.Sum));
+      serviceBinder.AddMethod(__Method_Accumulate, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply>(serviceImpl.Accumulate));
     }
 
   }

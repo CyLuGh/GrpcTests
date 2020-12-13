@@ -4,9 +4,18 @@ option csharp_namespace = "GrpcShared";
 
 package poc;
 
+// Microservice doing some sums
 service MicroPoc {
 	// Sum two items!
 	rpc Sum (SumRequest) returns (SumReply);
+
+	// Accumulate results
+	rpc Accumulate (stream AccumulatedElement) returns (stream SumReply);
+}
+
+// Accumulated values
+message AccumulatedElement {
+	int32 element = 1;
 }
 
 // Parameters to be summed

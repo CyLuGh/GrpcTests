@@ -25,8 +25,30 @@ def callHttp():
         response = stub.Sum(poc_pb2.SumRequest(first=8,second=6))
     print(response.result)
 
+def generate_accumulations():
+    accumulated = [
+        poc_pb2.AccumulatedElement(element=1),
+        poc_pb2.AccumulatedElement(element=3),
+        poc_pb2.AccumulatedElement(element=5),
+        poc_pb2.AccumulatedElement(element=7),
+        poc_pb2.AccumulatedElement(element=9)
+    ]
+
+    for acc in accumulated:
+        yield acc
+
+def send_accumulations(stub):
+    responses = stub.Accumulate(generate_accumulations())
+    for response in responses:
+        print("Accumulated %i" % response.result)
+
+def run():
+    with grpc.insecure_channel('localhost:5002') as channel:
+        stub = poc_pb2_grpc.MicroPocStub(channel)
+        send_accumulations(stub)
 
 if __name__ == '__main__':
     logging.basicConfig()
     callHttps()
     callHttp()
+    run()

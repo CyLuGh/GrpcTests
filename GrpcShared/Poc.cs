@@ -24,13 +24,16 @@ namespace GrpcShared {
     static PocReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cglwb2MucHJvdG8SA3BvYyIrCgpTdW1SZXF1ZXN0Eg0KBWZpcnN0GAEgASgF",
-            "Eg4KBnNlY29uZBgCIAEoBSIaCghTdW1SZXBseRIOCgZyZXN1bHQYASABKAUy",
-            "MQoITWljcm9Qb2MSJQoDU3VtEg8ucG9jLlN1bVJlcXVlc3QaDS5wb2MuU3Vt",
-            "UmVwbHlCDaoCCkdycGNTaGFyZWRiBnByb3RvMw=="));
+            "Cglwb2MucHJvdG8SA3BvYyIlChJBY2N1bXVsYXRlZEVsZW1lbnQSDwoHZWxl",
+            "bWVudBgBIAEoBSIrCgpTdW1SZXF1ZXN0Eg0KBWZpcnN0GAEgASgFEg4KBnNl",
+            "Y29uZBgCIAEoBSIaCghTdW1SZXBseRIOCgZyZXN1bHQYASABKAUyawoITWlj",
+            "cm9Qb2MSJQoDU3VtEg8ucG9jLlN1bVJlcXVlc3QaDS5wb2MuU3VtUmVwbHkS",
+            "OAoKQWNjdW11bGF0ZRIXLnBvYy5BY2N1bXVsYXRlZEVsZW1lbnQaDS5wb2Mu",
+            "U3VtUmVwbHkoATABQg2qAgpHcnBjU2hhcmVkYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.AccumulatedElement), global::GrpcShared.AccumulatedElement.Parser, new[]{ "Element" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.SumRequest), global::GrpcShared.SumRequest.Parser, new[]{ "First", "Second" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.SumReply), global::GrpcShared.SumReply.Parser, new[]{ "Result" }, null, null, null, null)
           }));
@@ -39,6 +42,181 @@ namespace GrpcShared {
 
   }
   #region Messages
+  /// <summary>
+  /// Accumulated values
+  /// </summary>
+  public sealed partial class AccumulatedElement : pb::IMessage<AccumulatedElement>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<AccumulatedElement> _parser = new pb::MessageParser<AccumulatedElement>(() => new AccumulatedElement());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<AccumulatedElement> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public AccumulatedElement() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public AccumulatedElement(AccumulatedElement other) : this() {
+      element_ = other.element_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public AccumulatedElement Clone() {
+      return new AccumulatedElement(this);
+    }
+
+    /// <summary>Field number for the "element" field.</summary>
+    public const int ElementFieldNumber = 1;
+    private int element_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Element {
+      get { return element_; }
+      set {
+        element_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as AccumulatedElement);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(AccumulatedElement other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Element != other.Element) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Element != 0) hash ^= Element.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Element != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Element);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Element != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Element);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Element != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Element);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(AccumulatedElement other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Element != 0) {
+        Element = other.Element;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Element = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Element = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   /// <summary>
   /// Parameters to be summed
   /// </summary>
@@ -54,7 +232,7 @@ namespace GrpcShared {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[0]; }
+      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -265,7 +443,7 @@ namespace GrpcShared {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[1]; }
+      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

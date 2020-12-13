@@ -13,7 +13,21 @@ namespace GrpcTestService.Services
         //    _logger = logger;
         //}
 
-        public override Task<SumReply> Sum( SumRequest request , ServerCallContext context )
-            => Task.FromResult( new SumReply() { Result = request.First + request.Second } );
+        public override Task<SumReply> Sum(SumRequest request, ServerCallContext context)
+            => Task.FromResult(new SumReply() { Result = request.First + request.Second });
+
+        public override async Task Accumulate(IAsyncStreamReader<AccumulatedElement> requestStream, IServerStreamWriter<SumReply> responseStream, ServerCallContext context)
+        {
+            int acc = 0;
+
+            while (await requestStream.MoveNext())
+            {
+                var accElement = requestStream.Current;
+                acc += accElement.Element;
+
+                if (!context.CancellationToken.IsCancellationRequested)
+                    await responseStream.WriteAsync(new SumReply { Result = acc });
+            }
+        }
     }
 }
