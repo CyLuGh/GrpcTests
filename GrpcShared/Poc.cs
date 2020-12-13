@@ -26,15 +26,18 @@ namespace GrpcShared {
           string.Concat(
             "Cglwb2MucHJvdG8SA3BvYyIlChJBY2N1bXVsYXRlZEVsZW1lbnQSDwoHZWxl",
             "bWVudBgBIAEoBSIrCgpTdW1SZXF1ZXN0Eg0KBWZpcnN0GAEgASgFEg4KBnNl",
-            "Y29uZBgCIAEoBSIaCghTdW1SZXBseRIOCgZyZXN1bHQYASABKAUyawoITWlj",
-            "cm9Qb2MSJQoDU3VtEg8ucG9jLlN1bVJlcXVlc3QaDS5wb2MuU3VtUmVwbHkS",
-            "OAoKQWNjdW11bGF0ZRIXLnBvYy5BY2N1bXVsYXRlZEVsZW1lbnQaDS5wb2Mu",
-            "U3VtUmVwbHkoATABQg2qAgpHcnBjU2hhcmVkYgZwcm90bzM="));
+            "Y29uZBgCIAEoBSIjCg9TdW1BcnJheVJlcXVlc3QSEAoIZWxlbWVudHMYASAD",
+            "KAUiGgoIU3VtUmVwbHkSDgoGcmVzdWx0GAEgASgFMpwBCghNaWNyb1BvYxIl",
+            "CgNTdW0SDy5wb2MuU3VtUmVxdWVzdBoNLnBvYy5TdW1SZXBseRIvCghTdW1B",
+            "cnJheRIULnBvYy5TdW1BcnJheVJlcXVlc3QaDS5wb2MuU3VtUmVwbHkSOAoK",
+            "QWNjdW11bGF0ZRIXLnBvYy5BY2N1bXVsYXRlZEVsZW1lbnQaDS5wb2MuU3Vt",
+            "UmVwbHkoATABQg2qAgpHcnBjU2hhcmVkYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.AccumulatedElement), global::GrpcShared.AccumulatedElement.Parser, new[]{ "Element" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.SumRequest), global::GrpcShared.SumRequest.Parser, new[]{ "First", "Second" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.SumArrayRequest), global::GrpcShared.SumArrayRequest.Parser, new[]{ "Elements" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GrpcShared.SumReply), global::GrpcShared.SumReply.Parser, new[]{ "Result" }, null, null, null, null)
           }));
     }
@@ -429,6 +432,172 @@ namespace GrpcShared {
   }
 
   /// <summary>
+  /// Array to be summed
+  /// </summary>
+  public sealed partial class SumArrayRequest : pb::IMessage<SumArrayRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SumArrayRequest> _parser = new pb::MessageParser<SumArrayRequest>(() => new SumArrayRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SumArrayRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SumArrayRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SumArrayRequest(SumArrayRequest other) : this() {
+      elements_ = other.elements_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SumArrayRequest Clone() {
+      return new SumArrayRequest(this);
+    }
+
+    /// <summary>Field number for the "elements" field.</summary>
+    public const int ElementsFieldNumber = 1;
+    private static readonly pb::FieldCodec<int> _repeated_elements_codec
+        = pb::FieldCodec.ForInt32(10);
+    private readonly pbc::RepeatedField<int> elements_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Elements {
+      get { return elements_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SumArrayRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SumArrayRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!elements_.Equals(other.elements_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= elements_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      elements_.WriteTo(output, _repeated_elements_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      elements_.WriteTo(ref output, _repeated_elements_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += elements_.CalculateSize(_repeated_elements_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SumArrayRequest other) {
+      if (other == null) {
+        return;
+      }
+      elements_.Add(other.elements_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 8: {
+            elements_.AddEntriesFrom(input, _repeated_elements_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10:
+          case 8: {
+            elements_.AddEntriesFrom(ref input, _repeated_elements_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
   /// Summ result
   /// </summary>
   public sealed partial class SumReply : pb::IMessage<SumReply>
@@ -443,7 +612,7 @@ namespace GrpcShared {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[2]; }
+      get { return global::GrpcShared.PocReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

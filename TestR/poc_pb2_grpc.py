@@ -20,6 +20,11 @@ class MicroPocStub(object):
                 request_serializer=poc__pb2.SumRequest.SerializeToString,
                 response_deserializer=poc__pb2.SumReply.FromString,
                 )
+        self.SumArray = channel.unary_unary(
+                '/poc.MicroPoc/SumArray',
+                request_serializer=poc__pb2.SumArrayRequest.SerializeToString,
+                response_deserializer=poc__pb2.SumReply.FromString,
+                )
         self.Accumulate = channel.stream_stream(
                 '/poc.MicroPoc/Accumulate',
                 request_serializer=poc__pb2.AccumulatedElement.SerializeToString,
@@ -38,6 +43,13 @@ class MicroPocServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SumArray(self, request, context):
+        """Sum array
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Accumulate(self, request_iterator, context):
         """Accumulate results
         """
@@ -51,6 +63,11 @@ def add_MicroPocServicer_to_server(servicer, server):
             'Sum': grpc.unary_unary_rpc_method_handler(
                     servicer.Sum,
                     request_deserializer=poc__pb2.SumRequest.FromString,
+                    response_serializer=poc__pb2.SumReply.SerializeToString,
+            ),
+            'SumArray': grpc.unary_unary_rpc_method_handler(
+                    servicer.SumArray,
+                    request_deserializer=poc__pb2.SumArrayRequest.FromString,
                     response_serializer=poc__pb2.SumReply.SerializeToString,
             ),
             'Accumulate': grpc.stream_stream_rpc_method_handler(
@@ -82,6 +99,23 @@ class MicroPoc(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/poc.MicroPoc/Sum',
             poc__pb2.SumRequest.SerializeToString,
+            poc__pb2.SumReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SumArray(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/poc.MicroPoc/SumArray',
+            poc__pb2.SumArrayRequest.SerializeToString,
             poc__pb2.SumReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

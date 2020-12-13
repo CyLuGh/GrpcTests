@@ -47,6 +47,7 @@ namespace GrpcShared {
 
     static readonly grpc::Marshaller<global::GrpcShared.SumRequest> __Marshaller_poc_SumRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumRequest.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.SumReply> __Marshaller_poc_SumReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumReply.Parser));
+    static readonly grpc::Marshaller<global::GrpcShared.SumArrayRequest> __Marshaller_poc_SumArrayRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumArrayRequest.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.AccumulatedElement> __Marshaller_poc_AccumulatedElement = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.AccumulatedElement.Parser));
 
     static readonly grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply> __Method_Sum = new grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(
@@ -54,6 +55,13 @@ namespace GrpcShared {
         __ServiceName,
         "Sum",
         __Marshaller_poc_SumRequest,
+        __Marshaller_poc_SumReply);
+
+    static readonly grpc::Method<global::GrpcShared.SumArrayRequest, global::GrpcShared.SumReply> __Method_SumArray = new grpc::Method<global::GrpcShared.SumArrayRequest, global::GrpcShared.SumReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SumArray",
+        __Marshaller_poc_SumArrayRequest,
         __Marshaller_poc_SumReply);
 
     static readonly grpc::Method<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply> __Method_Accumulate = new grpc::Method<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply>(
@@ -80,6 +88,17 @@ namespace GrpcShared {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::GrpcShared.SumReply> Sum(global::GrpcShared.SumRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Sum array
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::GrpcShared.SumReply> SumArray(global::GrpcShared.SumArrayRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -166,6 +185,50 @@ namespace GrpcShared {
         return CallInvoker.AsyncUnaryCall(__Method_Sum, null, options, request);
       }
       /// <summary>
+      /// Sum array
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::GrpcShared.SumReply SumArray(global::GrpcShared.SumArrayRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SumArray(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Sum array
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::GrpcShared.SumReply SumArray(global::GrpcShared.SumArrayRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SumArray, null, options, request);
+      }
+      /// <summary>
+      /// Sum array
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::GrpcShared.SumReply> SumArrayAsync(global::GrpcShared.SumArrayRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SumArrayAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Sum array
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::GrpcShared.SumReply> SumArrayAsync(global::GrpcShared.SumArrayRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SumArray, null, options, request);
+      }
+      /// <summary>
       /// Accumulate results
       /// </summary>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -198,6 +261,7 @@ namespace GrpcShared {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Sum, serviceImpl.Sum)
+          .AddMethod(__Method_SumArray, serviceImpl.SumArray)
           .AddMethod(__Method_Accumulate, serviceImpl.Accumulate).Build();
     }
 
@@ -208,6 +272,7 @@ namespace GrpcShared {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, MicroPocBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_Sum, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(serviceImpl.Sum));
+      serviceBinder.AddMethod(__Method_SumArray, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.SumArrayRequest, global::GrpcShared.SumReply>(serviceImpl.SumArray));
       serviceBinder.AddMethod(__Method_Accumulate, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply>(serviceImpl.Accumulate));
     }
 

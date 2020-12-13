@@ -24,15 +24,24 @@ namespace GrpcConsoleClient
 
             using var accumulate = client.Accumulate();
 
+            Task.Run(async () =>
+            {
+                while (await accumulate.ResponseStream.MoveNext(token.Token))
+                    AnsiConsole.MarkupLine("Accumulated [red]{0}[/]", accumulate.ResponseStream.Current.Result);
+            });
+
             for (int i = 1; i < 10; i++)
             {
                 await accumulate.RequestStream.WriteAsync(new AccumulatedElement { Element = i });
+                await Task.Delay(1000);
             }
 
             await accumulate.RequestStream.CompleteAsync();
 
-            while (await accumulate.ResponseStream.MoveNext(token.Token))
-                AnsiConsole.MarkupLine("Accumulated [red]{0}[/]", accumulate.ResponseStream.Current.Result);
+            var arReq = new SumArrayRequest();
+            arReq.Elements.AddRange(new[] { 10, 25, 100 });
+            var arResult = client.SumArray(arReq);
+            AnsiConsole.MarkupLine("Array sum is [red]{0}[/]", arResult.Result);
 
             Console.ReadLine();
         }

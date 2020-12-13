@@ -25,6 +25,18 @@ def callHttp():
         response = stub.Sum(poc_pb2.SumRequest(first=8,second=6))
     print(response.result)
 
+def sumArray():
+    '''https://developers.google.com/protocol-buffers/docs/reference/python-generated#repeated-fields'''
+    foo = poc_pb2.SumArrayRequest()
+    foo.elements.append(10)
+    foo.elements.extend([100,15])
+
+    with grpc.insecure_channel('localhost:5002') as channel:
+        stub = poc_pb2_grpc.MicroPocStub(channel)
+        response = stub.SumArray(foo)
+    print(response.result)
+
+
 def generate_accumulations():
     accumulated = [
         poc_pb2.AccumulatedElement(element=1),
@@ -51,4 +63,5 @@ if __name__ == '__main__':
     logging.basicConfig()
     callHttps()
     callHttp()
+    sumArray()
     run()

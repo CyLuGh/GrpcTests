@@ -9,6 +9,9 @@ service MicroPoc {
 	// Sum two items!
 	rpc Sum (SumRequest) returns (SumReply);
 
+	// Sum array
+	rpc SumArray (SumArrayRequest) returns (SumReply);
+
 	// Accumulate results
 	rpc Accumulate (stream AccumulatedElement) returns (stream SumReply);
 }
@@ -22,6 +25,11 @@ message AccumulatedElement {
 message SumRequest {
 	int32 first = 1;
 	int32 second = 2;
+}
+
+// Array to be summed
+message SumArrayRequest {
+	repeated int32 elements = 1;
 }
 
 // Summ result

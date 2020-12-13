@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\252\002\nGrpcShared',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\tpoc.proto\x12\x03poc\"%\n\x12\x41\x63\x63umulatedElement\x12\x0f\n\x07\x65lement\x18\x01 \x01(\x05\"+\n\nSumRequest\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\"\x1a\n\x08SumReply\x12\x0e\n\x06result\x18\x01 \x01(\x05\x32k\n\x08MicroPoc\x12%\n\x03Sum\x12\x0f.poc.SumRequest\x1a\r.poc.SumReply\x12\x38\n\nAccumulate\x12\x17.poc.AccumulatedElement\x1a\r.poc.SumReply(\x01\x30\x01\x42\r\xaa\x02\nGrpcSharedb\x06proto3'
+  serialized_pb=b'\n\tpoc.proto\x12\x03poc\"%\n\x12\x41\x63\x63umulatedElement\x12\x0f\n\x07\x65lement\x18\x01 \x01(\x05\"+\n\nSumRequest\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\"#\n\x0fSumArrayRequest\x12\x10\n\x08\x65lements\x18\x01 \x03(\x05\"\x1a\n\x08SumReply\x12\x0e\n\x06result\x18\x01 \x01(\x05\x32\x9c\x01\n\x08MicroPoc\x12%\n\x03Sum\x12\x0f.poc.SumRequest\x1a\r.poc.SumReply\x12/\n\x08SumArray\x12\x14.poc.SumArrayRequest\x1a\r.poc.SumReply\x12\x38\n\nAccumulate\x12\x17.poc.AccumulatedElement\x1a\r.poc.SumReply(\x01\x30\x01\x42\r\xaa\x02\nGrpcSharedb\x06proto3'
 )
 
 
@@ -96,6 +96,38 @@ _SUMREQUEST = _descriptor.Descriptor(
 )
 
 
+_SUMARRAYREQUEST = _descriptor.Descriptor(
+  name='SumArrayRequest',
+  full_name='poc.SumArrayRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='elements', full_name='poc.SumArrayRequest.elements', index=0,
+      number=1, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=102,
+  serialized_end=137,
+)
+
+
 _SUMREPLY = _descriptor.Descriptor(
   name='SumReply',
   full_name='poc.SumReply',
@@ -123,12 +155,13 @@ _SUMREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=102,
-  serialized_end=128,
+  serialized_start=139,
+  serialized_end=165,
 )
 
 DESCRIPTOR.message_types_by_name['AccumulatedElement'] = _ACCUMULATEDELEMENT
 DESCRIPTOR.message_types_by_name['SumRequest'] = _SUMREQUEST
+DESCRIPTOR.message_types_by_name['SumArrayRequest'] = _SUMARRAYREQUEST
 DESCRIPTOR.message_types_by_name['SumReply'] = _SUMREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -145,6 +178,13 @@ SumRequest = _reflection.GeneratedProtocolMessageType('SumRequest', (_message.Me
   # @@protoc_insertion_point(class_scope:poc.SumRequest)
   })
 _sym_db.RegisterMessage(SumRequest)
+
+SumArrayRequest = _reflection.GeneratedProtocolMessageType('SumArrayRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SUMARRAYREQUEST,
+  '__module__' : 'poc_pb2'
+  # @@protoc_insertion_point(class_scope:poc.SumArrayRequest)
+  })
+_sym_db.RegisterMessage(SumArrayRequest)
 
 SumReply = _reflection.GeneratedProtocolMessageType('SumReply', (_message.Message,), {
   'DESCRIPTOR' : _SUMREPLY,
@@ -163,8 +203,8 @@ _MICROPOC = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=130,
-  serialized_end=237,
+  serialized_start=168,
+  serialized_end=324,
   methods=[
   _descriptor.MethodDescriptor(
     name='Sum',
@@ -177,9 +217,19 @@ _MICROPOC = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='SumArray',
+    full_name='poc.MicroPoc.SumArray',
+    index=1,
+    containing_service=None,
+    input_type=_SUMARRAYREQUEST,
+    output_type=_SUMREPLY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='Accumulate',
     full_name='poc.MicroPoc.Accumulate',
-    index=1,
+    index=2,
     containing_service=None,
     input_type=_ACCUMULATEDELEMENT,
     output_type=_SUMREPLY,
