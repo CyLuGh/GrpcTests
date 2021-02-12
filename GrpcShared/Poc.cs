@@ -27,11 +27,12 @@ namespace GrpcShared {
             "Cglwb2MucHJvdG8SA3BvYyIlChJBY2N1bXVsYXRlZEVsZW1lbnQSDwoHZWxl",
             "bWVudBgBIAEoBSIrCgpTdW1SZXF1ZXN0Eg0KBWZpcnN0GAEgASgFEg4KBnNl",
             "Y29uZBgCIAEoBSIjCg9TdW1BcnJheVJlcXVlc3QSEAoIZWxlbWVudHMYASAD",
-            "KAUiGgoIU3VtUmVwbHkSDgoGcmVzdWx0GAEgASgFMpwBCghNaWNyb1BvYxIl",
+            "KAUiGgoIU3VtUmVwbHkSDgoGcmVzdWx0GAEgASgFMtMBCghNaWNyb1BvYxIl",
             "CgNTdW0SDy5wb2MuU3VtUmVxdWVzdBoNLnBvYy5TdW1SZXBseRIvCghTdW1B",
             "cnJheRIULnBvYy5TdW1BcnJheVJlcXVlc3QaDS5wb2MuU3VtUmVwbHkSOAoK",
             "QWNjdW11bGF0ZRIXLnBvYy5BY2N1bXVsYXRlZEVsZW1lbnQaDS5wb2MuU3Vt",
-            "UmVwbHkoATABQg2qAgpHcnBjU2hhcmVkYgZwcm90bzM="));
+            "UmVwbHkoATABEjUKCVN1bVN0cmVhbRIXLnBvYy5BY2N1bXVsYXRlZEVsZW1l",
+            "bnQaDS5wb2MuU3VtUmVwbHkoAUINqgIKR3JwY1NoYXJlZGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -598,7 +599,7 @@ namespace GrpcShared {
   }
 
   /// <summary>
-  /// Summ result
+  /// Sum result
   /// </summary>
   public sealed partial class SumReply : pb::IMessage<SumReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE

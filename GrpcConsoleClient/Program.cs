@@ -43,6 +43,19 @@ namespace GrpcConsoleClient
             var arResult = client.SumArray(arReq);
             AnsiConsole.MarkupLine("Array sum is [red]{0}[/]", arResult.Result);
 
+            using var sumStream = client.SumStream();
+
+            for (int i = 1; i < 10; i++)
+            {
+                await sumStream.RequestStream.WriteAsync(new AccumulatedElement { Element = i });
+                await Task.Delay(100);
+            }
+
+            await sumStream.RequestStream.CompleteAsync();
+
+            var res = await sumStream;
+            AnsiConsole.MarkupLine("Streaming sum is [red]{0}[/]", arResult.Result);
+
             Console.ReadLine();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using GrpcShared;
@@ -25,7 +26,7 @@ namespace GrpcTestService.Services
         {
             int acc = 0;
 
-            while (await requestStream.MoveNext())
+            while (await requestStream.MoveNext(context.CancellationToken))
             {
                 var accElement = requestStream.Current;
                 acc += accElement.Element;
@@ -33,6 +34,19 @@ namespace GrpcTestService.Services
                 if (!context.CancellationToken.IsCancellationRequested)
                     await responseStream.WriteAsync(new SumReply { Result = acc });
             }
+        }
+
+        public override async Task<SumReply> SumStream(IAsyncStreamReader<AccumulatedElement> requestStream, ServerCallContext context)
+        {
+            int acc = 0;
+
+            while (await requestStream.MoveNext(context.CancellationToken))
+            {
+                var accElement = requestStream.Current;
+                acc += accElement.Element;
+            }
+
+            return new SumReply { Result = acc };
         }
     }
 }
