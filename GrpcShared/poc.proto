@@ -2,12 +2,25 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcShared";
 
+import "google/api/annotations.proto";
+
 package poc;
 
 // Microservice doing some sums
 service MicroPoc {
+	rpc Hello(HelloRequest) returns (HelloReply) {
+		option(google.api.http) = {
+			get: "/v1/poc/hello/{name}"
+		};
+	}
+
 	// Sum two items!
-	rpc Sum (SumRequest) returns (SumReply);
+	rpc Sum (SumRequest) returns (SumReply) {
+		option(google.api.http) = {
+			post: "/v1/poc/sum"
+			body: "*"
+		};
+	}
 
 	// Sum array
 	rpc SumArray (SumArrayRequest) returns (SumReply);
@@ -17,6 +30,14 @@ service MicroPoc {
 
 	// Sum stream
 	rpc SumStream (stream AccumulatedElement) returns (SumReply);
+}
+
+message HelloRequest {
+	string name = 1;
+}
+
+message HelloReply {
+	string message = 1;
 }
 
 // Accumulated values

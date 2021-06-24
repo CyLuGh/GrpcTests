@@ -7,40 +7,43 @@ using Microsoft.Extensions.Logging;
 
 namespace GrpcTestService.Services
 {
-    public class MicroPocService : MicroPoc.MicroPocBase
+    public class MicroPocService : MicroPoc.MicroPocBase, IMicroPoc
     {
         private readonly ILogger<MicroPocService> _logger;
 
-        public MicroPocService(ILogger<MicroPocService> logger)
+        public MicroPocService( ILogger<MicroPocService> logger )
         {
             _logger = logger;
         }
 
-        public override Task<SumReply> Sum(SumRequest request, ServerCallContext context)
-            => Task.FromResult(new SumReply { Result = request.First + request.Second });
+        public override Task<HelloReply> Hello( HelloRequest request , ServerCallContext context )
+            => Task.FromResult( new HelloReply { Message = $"Hello {request.Name}" } );
 
-        public override Task<SumReply> SumArray(SumArrayRequest request, ServerCallContext context)
-            => Task.FromResult(new SumReply { Result = request.Elements.Sum(x => x) });
+        public override Task<SumReply> Sum( SumRequest request , ServerCallContext context )
+            => Task.FromResult( new SumReply { Result = request.First + request.Second } );
 
-        public override async Task Accumulate(IAsyncStreamReader<AccumulatedElement> requestStream, IServerStreamWriter<SumReply> responseStream, ServerCallContext context)
+        public override Task<SumReply> SumArray( SumArrayRequest request , ServerCallContext context )
+            => Task.FromResult( new SumReply { Result = request.Elements.Sum( x => x ) } );
+
+        public override async Task Accumulate( IAsyncStreamReader<AccumulatedElement> requestStream , IServerStreamWriter<SumReply> responseStream , ServerCallContext context )
         {
             int acc = 0;
 
-            while (await requestStream.MoveNext(context.CancellationToken))
+            while ( await requestStream.MoveNext( context.CancellationToken ) )
             {
                 var accElement = requestStream.Current;
                 acc += accElement.Element;
 
-                if (!context.CancellationToken.IsCancellationRequested)
-                    await responseStream.WriteAsync(new SumReply { Result = acc });
+                if ( !context.CancellationToken.IsCancellationRequested )
+                    await responseStream.WriteAsync( new SumReply { Result = acc } );
             }
         }
 
-        public override async Task<SumReply> SumStream(IAsyncStreamReader<AccumulatedElement> requestStream, ServerCallContext context)
+        public override async Task<SumReply> SumStream( IAsyncStreamReader<AccumulatedElement> requestStream , ServerCallContext context )
         {
             int acc = 0;
 
-            while (await requestStream.MoveNext(context.CancellationToken))
+            while ( await requestStream.MoveNext( context.CancellationToken ) )
             {
                 var accElement = requestStream.Current;
                 acc += accElement.Element;

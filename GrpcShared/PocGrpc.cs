@@ -45,10 +45,19 @@ namespace GrpcShared {
       return parser.ParseFrom(context.PayloadAsNewBuffer());
     }
 
+    static readonly grpc::Marshaller<global::GrpcShared.HelloRequest> __Marshaller_poc_HelloRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.HelloRequest.Parser));
+    static readonly grpc::Marshaller<global::GrpcShared.HelloReply> __Marshaller_poc_HelloReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.HelloReply.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.SumRequest> __Marshaller_poc_SumRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumRequest.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.SumReply> __Marshaller_poc_SumReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumReply.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.SumArrayRequest> __Marshaller_poc_SumArrayRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.SumArrayRequest.Parser));
     static readonly grpc::Marshaller<global::GrpcShared.AccumulatedElement> __Marshaller_poc_AccumulatedElement = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcShared.AccumulatedElement.Parser));
+
+    static readonly grpc::Method<global::GrpcShared.HelloRequest, global::GrpcShared.HelloReply> __Method_Hello = new grpc::Method<global::GrpcShared.HelloRequest, global::GrpcShared.HelloReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "Hello",
+        __Marshaller_poc_HelloRequest,
+        __Marshaller_poc_HelloReply);
 
     static readonly grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply> __Method_Sum = new grpc::Method<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(
         grpc::MethodType.Unary,
@@ -88,6 +97,11 @@ namespace GrpcShared {
     [grpc::BindServiceMethod(typeof(MicroPoc), "BindService")]
     public abstract partial class MicroPocBase
     {
+      public virtual global::System.Threading.Tasks.Task<global::GrpcShared.HelloReply> Hello(global::GrpcShared.HelloRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
       /// <summary>
       /// Sum two items!
       /// </summary>
@@ -158,6 +172,22 @@ namespace GrpcShared {
       {
       }
 
+      public virtual global::GrpcShared.HelloReply Hello(global::GrpcShared.HelloRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return Hello(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::GrpcShared.HelloReply Hello(global::GrpcShared.HelloRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_Hello, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::GrpcShared.HelloReply> HelloAsync(global::GrpcShared.HelloRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return HelloAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::GrpcShared.HelloReply> HelloAsync(global::GrpcShared.HelloRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_Hello, null, options, request);
+      }
       /// <summary>
       /// Sum two items!
       /// </summary>
@@ -298,6 +328,7 @@ namespace GrpcShared {
     public static grpc::ServerServiceDefinition BindService(MicroPocBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_Hello, serviceImpl.Hello)
           .AddMethod(__Method_Sum, serviceImpl.Sum)
           .AddMethod(__Method_SumArray, serviceImpl.SumArray)
           .AddMethod(__Method_Accumulate, serviceImpl.Accumulate)
@@ -310,6 +341,7 @@ namespace GrpcShared {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, MicroPocBase serviceImpl)
     {
+      serviceBinder.AddMethod(__Method_Hello, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.HelloRequest, global::GrpcShared.HelloReply>(serviceImpl.Hello));
       serviceBinder.AddMethod(__Method_Sum, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.SumRequest, global::GrpcShared.SumReply>(serviceImpl.Sum));
       serviceBinder.AddMethod(__Method_SumArray, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcShared.SumArrayRequest, global::GrpcShared.SumReply>(serviceImpl.SumArray));
       serviceBinder.AddMethod(__Method_Accumulate, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::GrpcShared.AccumulatedElement, global::GrpcShared.SumReply>(serviceImpl.Accumulate));
