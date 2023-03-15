@@ -18,7 +18,7 @@ Install GRPC tools
 
 Generate python code from proto file
 
-`python -m grpc_tools.protoc -I../GrpcShared --python_out=. --grpc_python_out=. ../GrpcShared/poc.proto`
+`python -m grpc_tools.protoc -I../GrpcShared --python_out=. --pyi_out=. --grpc_python_out=. ../GrpcShared/poc.proto`
 
 ### Certificate
 
