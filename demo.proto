@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "Demo";
+
+package demo;
+
+service MiniDemo {
+	rpc Sum(SumRequestDto) returns (SumResultDto);
+	rpc SumArray(SumArrayRequestDto) returns (SumResultDto);
+	rpc SumStream (stream AccumulatedElementDto) returns (SumResultDto);
+	rpc SumArrayDetailStream (SumArrayRequestDto) returns (stream SumResultDto);
+	rpc Accumulate(stream AccumulatedElementDto) returns (stream SumResultDto);
+}
+
+message AccumulatedElementDto {
+	int32 item = 1;
+}
+
+message SumResultDto {
+	int32 result = 1;
+}
+
+message SumArrayRequestDto {
+	repeated int32 elements = 1;
+}
+
+message SumRequestDto {
+	int32 first = 1;
+	int32 second = 2;
+}
