@@ -1,3 +1,4 @@
+import time
 import grpc
 
 import demo_pb2
@@ -26,6 +27,7 @@ def unary_call_repeated():
 def generate_client_stream():
     for item in [1,2,3,4,5,6,7,8,9,10]:
         print('Sending %i' % item)
+        time.sleep(0.001)
         yield demo_pb2.AccumulatedElementDto(item=item) 
 
 def client_stream():
@@ -58,8 +60,15 @@ def bidirectional_stream():
     print()
 
 if __name__ == '__main__':
+    print('Python client')
+    input()
     unary_call()
+    input()
     unary_call_repeated()
+    input()
     client_stream()
+    input()
     server_stream()
+    input()
     bidirectional_stream()
+    input()

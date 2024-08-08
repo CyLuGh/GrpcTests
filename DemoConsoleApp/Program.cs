@@ -3,6 +3,8 @@ using Demo;
 using Grpc.Net.Client;
 using Spectre.Console;
 
+AnsiConsole.MarkupLine("[bold][dodgerblue1].NET[/][/] client");
+
 const string address = "http://localhost:5267";
 AnsiConsole.MarkupLine($"Building client to [yellow]{address}[/]!");
 
@@ -10,6 +12,7 @@ var channel = GrpcChannel.ForAddress(address);
 var client = new MiniDemo.MiniDemoClient(channel);
 
 AnsiConsole.WriteLine();
+Console.ReadLine();
 AnsiConsole.MarkupLine("Let's test [yellow]unary call[/]");
 
 AnsiConsole.MarkupLine("Let's sum [red]3[/] and [red]4[/]!");
@@ -19,6 +22,7 @@ AnsiConsole.MarkupLine("Result is [red]{0}[/]", result.Result);
 await Task.Delay(1000);
 
 AnsiConsole.WriteLine();
+Console.ReadLine();
 AnsiConsole.MarkupLine("Let's test [yellow]unary call[/] with [yellow]repeated[/] elements");
 
 SumArrayRequestDto sumArrayRequestDto = new();
@@ -28,11 +32,14 @@ result = await client.SumArrayAsync(sumArrayRequestDto);
 AnsiConsole.MarkupLine("Result is [red]{0}[/]", result.Result);
 
 AnsiConsole.WriteLine();
+Console.ReadLine();
 AnsiConsole.MarkupLine("Let's test [yellow]client stream[/]");
 
 var sumStream = client.SumStream();
 for (int i = 1; i <= 10; i++)
 {
+    AnsiConsole.MarkupLine("Sending [green]{0}[/] to server", i);
+    await Task.Delay(1);
     await sumStream.RequestStream.WriteAsync(new AccumulatedElementDto { Item = i });
 }
 await sumStream.RequestStream.CompleteAsync();
@@ -40,6 +47,7 @@ result = await sumStream.ResponseAsync;
 AnsiConsole.MarkupLine("Result is [red]{0}[/]", result.Result);
 
 AnsiConsole.WriteLine();
+Console.ReadLine();
 AnsiConsole.MarkupLine("Let's test [yellow]server stream[/]");
 
 var detailStream = client.SumArrayDetailStream(sumArrayRequestDto);
@@ -50,6 +58,7 @@ while (await detailStream.ResponseStream.MoveNext(new CancellationToken()))
 }
 
 AnsiConsole.WriteLine();
+Console.ReadLine();
 AnsiConsole.MarkupLine("Let's test [yellow]bidirectional stream[/]");
 
 var biDirStream = client.Accumulate();
@@ -59,7 +68,8 @@ await Task.WhenAll(
     {
         for (int i = 1; i <= 10; i++)
         {
-            AnsiConsole.MarkupLine("Sending is [green]{0}[/] to server", i);
+            AnsiConsole.MarkupLine("Sending [green]{0}[/] to server", i);
+            await Task.Delay(1);
             await biDirStream.RequestStream.WriteAsync(new AccumulatedElementDto { Item = i });
         }
 
@@ -78,5 +88,4 @@ await Task.WhenAll(
 );
 
 AnsiConsole.WriteLine();
-AnsiConsole.MarkupLine("Press enter to exit");
 Console.ReadLine();

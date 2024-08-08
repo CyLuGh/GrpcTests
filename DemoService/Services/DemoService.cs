@@ -1,10 +1,16 @@
 ﻿using Demo;
 using Grpc.Core;
+using Splat;
 
 namespace DemoService.Services;
 
-public class DemoService : MiniDemo.MiniDemoBase
+public class DemoService : MiniDemo.MiniDemoBase, IEnableLogger
 {
+    public DemoService()
+    {
+        this.Log().Info("Creating service instance ");
+    }
+
     public override Task<SumResultDto> Sum(SumRequestDto request, ServerCallContext context) =>
         Task.FromResult(new SumResultDto() { Result = request.First + request.Second });
 
